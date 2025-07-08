@@ -10,7 +10,7 @@ const App: React.FC = () => {
     {
       role: "assistant",
       content: "🌿 Bonjour, je suis SanaBot. Décris-moi doucement ce que tu ressens.",
-    },
+    } as const,
   ]);
 
   const [apiKey, setApiKey] = useState<string | null>(null);
@@ -27,7 +27,7 @@ const App: React.FC = () => {
   }, []);
 
   const handleUserMessage = async (userInput: string) => {
-    const newMessages = [...messages, { role: "user", content: userInput }];
+    const newMessages = [...messages, { role: "user", content: userInput } as const];
     setMessages(newMessages);
     setIsLoading(true);
 
@@ -45,7 +45,7 @@ const App: React.FC = () => {
         {
           role: "assistant",
           content: "❗ Une erreur est survenue. Vérifie ta clé API.",
-        },
+        } as const,
       ]);
     } finally {
       setIsLoading(false);
@@ -64,6 +64,7 @@ const App: React.FC = () => {
       <ChatWindow messages={messages} />
       <InputBar onSend={handleUserMessage} disabled={isLoading || showModal} />
       {showModal && <ApiKeyModal onSubmit={handleApiKeySubmit} />}
+
     </div>
   );
 };
